@@ -1,38 +1,37 @@
-import Item from "../Item/Item"
-import { getProducts } from "../../data/asyncMock"
-import { useEffect, useState } from "react" // Importamos Hookreact useState
-import Loading from "../Loading/Loading"; // Importamos el componente Loading
+import Item from "../Item/Item";
+import { getProducts } from "../../data/asyncMock";
+import { useEffect, useState } from "react";
+import Loading from "../Loading/Loading";
+import './ItemList.css';
 
+export default function ItemList({ products: initialProducts }) {
+    const [products, setProducts] = useState(initialProducts || []);
+    const [loading, setLoading] = useState(!initialProducts);
 
-export default function ItemList(){
-    const [products, setProducts] = useState([]);
-
-    const [loading, setLoading] = useState(true); // Declaramos las variables loading y setloading
-   
     useEffect(() => {
-        getProducts().then((data) =>{
-            setProducts(data)
+        if (!initialProducts) {
+            getProducts().then((data) => {
+                setProducts(data);
+                setLoading(false);
+            });
+        } else {
             setLoading(false);
-        });
-    }, []);
+        }
+    }, [initialProducts]);
 
-
-    return(
+    return (
         <>
-        
-        {loading?
-            (
-                <Loading />
-            ):(
-                <div className="flex flex-wrap justify-center">
-                    {products.map((prod) =>(
-                        <Item {...prod} key={prod.id}/>
+            {loading ? (
+                <div>
+                    <Loading />
+                </div>
+            ) : (
+                <div className="item-container">
+                    {products.map((prod) => (
+                        <Item {...prod} key={prod.id} />
                     ))}
                 </div>
-            )
-        }
-        
+            )}
         </>
-    )
+    );
 }
-

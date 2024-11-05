@@ -13,7 +13,7 @@ export const Footer = () => {
         <li className="nav-item"><a href="#" className="nav-link px-2 text-body-secondary">Preguntas</a></li>
         <li className="nav-item"><a href="#" className="nav-link px-2 text-body-secondary">Sobre nosotros</a></li>
       </ul>
-      <p className="text-center text-body-secondary">&copy; 2024 Compañia, Inc</p>
+      <p className="text-center text-body-secondary">&copy; 2024 Get Tech, Inc</p>
       <center><img src={Icono} alt="icono" /></center>
     </footer>
   </div>
