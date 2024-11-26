@@ -7,6 +7,7 @@ import './ItemList.css';
 export default function ItemList({ products: initialProducts }) {
     const [products, setProducts] = useState(initialProducts || []);
     const [loading, setLoading] = useState(!initialProducts);
+    const [category, setCategory] = useState(''); 
 
     useEffect(() => {
         if (!initialProducts) {
@@ -19,6 +20,10 @@ export default function ItemList({ products: initialProducts }) {
         }
     }, [initialProducts]);
 
+    const filteredProducts = category
+        ? products.filter((prod) => prod.category === category)
+        : products;
+
     return (
         <>
             {loading ? (
@@ -26,10 +31,32 @@ export default function ItemList({ products: initialProducts }) {
                     <Loading />
                 </div>
             ) : (
-                <div className="item-container">
-                    {products.map((prod) => (
-                        <Item {...prod} key={prod.id} />
-                    ))}
+                <div>
+                    {}
+                    <div className="filter-container">
+                        <label htmlFor="category">Filtrar por categoría: </label>
+                        <select
+                            id="category"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <option value="">Todas</option>
+                            {Array.from(new Set(products.map((prod) => prod.category))).map(
+                                (cat) => (
+                                    <option key={cat} value={cat}>
+                                        {cat}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
+
+                   
+                    <div className="item-container">
+                        {filteredProducts.map((prod) => (
+                            <Item {...prod} key={prod.id} />
+                        ))}
+                    </div>
                 </div>
             )}
         </>

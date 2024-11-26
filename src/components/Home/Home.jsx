@@ -12,10 +12,9 @@ export default function HomePage() {
             >
                 <div className="container mx-auto max-w-[1170px] flex flex-col h-[700px] justify-center">
                     <h2 className="text-[#ffffff] font-bold text-[100px] leading-[80px] uppercase">
-                        featured 
+                        Productos
                     </h2>
-                    <h2 className="text-[#ffffff] font-bold text-[100px] leading-[80px] uppercase">Cycle</h2>
-                    <Link to="/" className="bg-[#2d3a4b] px-[50px] py-[5px] text-[18px] uppercase leading-[46px] flex w-[210px] text-center text-[#ffffff] mt-[30px]">SHOP NOW</Link>
+             
                 
                 </div>
             </div>

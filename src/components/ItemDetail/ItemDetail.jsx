@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../../data/asyncMock.jsx';
+import { useCartStore } from '../../stores/cartStore'; 
 
 export default function ItemDetail() {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [quantity, setQuantity] = useState(1); // el estado de la cantidad
+    const [quantity, setQuantity] = useState(1);
+
+    const addToCart = useCartStore((state) => state.addToCart); 
 
     useEffect(() => {
         getProductById(productId).then((data) => {
@@ -24,21 +27,31 @@ export default function ItemDetail() {
     }
 
     const handleIncrease = () => {
-        setQuantity(quantity + 1); //la incrementea
+        if (quantity < product.stock) {
+            setQuantity(quantity + 1);
+        }
     };
 
     const handleDecrease = () => {
         if (quantity > 1) {
-            setQuantity(quantity - 1); //la disminuye solo si es mayor a 1
+            setQuantity(quantity - 1);
         }
     };
 
     const handleAddToCart = () => {
-        alert(`Agregado ${quantity} ${product.name}(s) al carrito`); //aqui tengo que añadir la cantidad en el data de los items aun :(
+        addToCart(
+            {
+                id: product.id,
+                name: product.name,
+                price: parseFloat(product.price), 
+            },
+            quantity
+        );
+        alert(`Agregado ${quantity} ${product.name}(s) al carrito`);
     };
 
     return (
-        <div className='container mx-auto'>
+        <div className="container mx-auto">
             <div className="grid grid-cols-2">
                 <div className="span-col-1">
                     <img src={product.img} alt={`Imagen de ${product.name}`} />
@@ -46,7 +59,7 @@ export default function ItemDetail() {
                 <div>
                     <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
                     <p className="mb-2">{product.description}</p>
-                    <p className="font-semibold mb-2">Price: ${product.price}</p>
+                    <p className="font-semibold mb-2">Precio: ${product.price}</p>
                     <p className="mb-4">Stock: {product.stock}</p>
 
                     <div className="flex items-center mb-4">
@@ -65,9 +78,14 @@ export default function ItemDetail() {
                         </button>
                     </div>
 
+                    {quantity > product.stock && (
+                        <p className="text-red-500 mb-4">No hay suficiente stock disponible</p>
+                    )}
+
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
                         onClick={handleAddToCart}
+                        disabled={quantity > product.stock}
                     >
                         Añadir al Carrito
                     </button>
