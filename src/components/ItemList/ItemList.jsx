@@ -33,6 +33,13 @@ export default function ItemList({ products: initialProducts }) {
             ) : (
                 <div>
                     {}
+                    <div className="container mx-auto max-w-[1170px] flex flex-col h-[700px] justify-center">
+                    <h2 className="text-[#ffffff] font-bold text-[100px] leading-[80px] uppercase">
+                        Productos
+                    </h2>
+             
+                
+                </div>
                     <div className="filter-container">
                         <label htmlFor="category">Filtrar por categoría: </label>
                         <select

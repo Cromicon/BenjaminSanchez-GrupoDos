@@ -10,13 +10,7 @@ export default function HomePage() {
                 className="h-[900px] w-[100vw] bg-cover bg-center"
                 style={{ backgroundImage: `url(${imgBanner})` }}
             >
-                <div className="container mx-auto max-w-[1170px] flex flex-col h-[700px] justify-center">
-                    <h2 className="text-[#ffffff] font-bold text-[100px] leading-[80px] uppercase">
-                        Productos
-                    </h2>
-             
-                
-                </div>
+               
             </div>
             <div className="container mx-auto max-w-[1170px] my-[50px]">
                 <ItemList />
